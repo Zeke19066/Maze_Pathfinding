@@ -27,9 +27,9 @@ class SnakeGame():
         self.random_mode = True
         self.death_count = 0 #how many ded snek?
 
-        self.res_x = 48*2#48
-        self.res_y = 27*2#27
-        self.pixel_size = 10
+        self.res_x = 48*4#48
+        self.res_y = 27*4#27
+        self.pixel_size = 6
         self.game_speed = 6500
         self.final_speed = 0
         self.game_close = False
