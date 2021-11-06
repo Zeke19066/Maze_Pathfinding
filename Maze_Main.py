@@ -37,7 +37,6 @@ class SnakeGame():
         self.modes = ["Squared Difference", "Geometric Mean", "Manhattan Heuristic"]
         self.py_ai = Maze_AI.Maze_AI(f_mode=0) #dont forget fmode
         self.maze_generator = Maze_Generator.Maze_Generator(self.res_y,self.res_x)
-        self.lose_count = 0 #how many times have we lost?
         self.cycle = 1
 
         os.environ['SDL_VIDEO_WINDOW_POS'] = f"{100},{100}" # This is how we set the window position on the screen. Must come before pygame init.
@@ -121,11 +120,15 @@ class SnakeGame():
             for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         terminal_bool = True
+                        pygame.quit()
+                        quit()
                         return terminal_bool
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_ESCAPE:
                             print('Exiting Now')
                             terminal_bool = True
+                            pygame.quit()
+                            quit()
                             return terminal_bool
 
             #now run the AI stuff
@@ -166,9 +169,8 @@ class SnakeGame():
 
 def main():
     snek = SnakeGame()
-    terminal_bool = False
-    while not terminal_bool:
-        terminal_bool = snek.gameLoop()
+    while 1:
+        snek.gameLoop()
 
 if __name__ == "__main__":
     main()
