@@ -10,7 +10,7 @@ Try a HILBERT curve pathfinding algorithm
 
 '''
 import numpy as np
-from math import sqrt
+from math import isqrt#sqrt
 #import matplotlib.pyplot as plt
 #from warnings import warn
 #import heapq
@@ -129,20 +129,15 @@ class Maze_AI:
                     continue
 
                 # Create new node
-                new_node= { "parent":current_node,
+                child = { "parent":current_node,
                             "position":(node_y, node_x),
                             "g":0,
                             "h":0,
                             "f":0
                         }
 
-                # Append
-                children.append(new_node)
-
-            # Loop through children
-            for child in children:
-
                 # Skip if child is on the closed list
+                child_pos = child["position"]
                 if len([closed_child for closed_child in closed_list if closed_child["position"] == child["position"]]) > 0:
                     continue
 
@@ -150,11 +145,11 @@ class Maze_AI:
                 child["g"] = current_node["g"] + 1
                 
                 if self.f_mode == 1: #cube
-                    child["h"] = ((child["position"][0] - end_node["position"][0]) ** 2) + ((child["position"][1] - end_node["position"][1]) ** 2)
+                    child["h"] = ((child_pos[0] - end[0]) ** 2) + ((child_pos[1] - end[1]) ** 2)
                 elif self.f_mode == 2: #cube then sqrt
-                    child["h"] = sqrt((child["position"][0] - end_node["position"][0]) ** 2) + ((child["position"][1] - end_node["position"][1]) ** 2)
+                    child["h"] = isqrt((child_pos[0] - end[0]) ** 2) + ((child_pos[1] - end[1]) ** 2)
                 elif self.f_mode == 3: #Manhattan heuristic
-                    child["h"] = 1.1*(abs(child["position"][0] - end_node["position"][0]) + abs(child["position"][1] - end_node["position"][1]))
+                    child["h"] = 1.1*(abs(child_pos[0] - end[0]) + abs(child_pos[1] - end[1]))
                 
                 child["f"] = child["g"] + child["h"]
 
