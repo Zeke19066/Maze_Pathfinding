@@ -19,6 +19,7 @@ from collections import deque
 
 import Maze_AI
 import Maze_Generator
+import Gifmaker
 
 class SnakeGame():
     def __init__(self):
@@ -27,9 +28,9 @@ class SnakeGame():
         self.random_mode = True
         self.death_count = 0 #how many ded snek?
 
-        self.res_x = 48*2#48
-        self.res_y = 27*2#27
-        self.pixel_size = 10
+        self.res_x = 30#48
+        self.res_y = 30#27
+        self.pixel_size = 8
         self.game_speed = 6500
         self.final_speed = 0
         self.game_close = False
@@ -61,12 +62,15 @@ class SnakeGame():
             "soft_red": (213, 50, 80),
             "red":(255,0,0),
             "green": (0, 255, 0),
+            "dark_green": (0,100,0),
             "soft_blue": (50, 153, 213),
             "blue": (0,0,255),
             "gray": (150,150,150),
             "light_gray": (200,200,200)
             }
         self.open_color = self.color_dict["light_gray"]
+
+        self.gif = Gifmaker.Capture()
 
     def score_generator(self, score):
         value = self.score_font.render("Your Score: " + str(score), True, self.color_dict["white"])
@@ -105,7 +109,8 @@ class SnakeGame():
         self.game_close, terminal_bool = False, False
         #setup the start of each game:
         self.path_colors = [self.color_dict["green"],self.color_dict["soft_blue"],self.color_dict["orange"], 
-                    self.color_dict["purple"], self.color_dict["pink"], self.color_dict["yellow"]
+                    self.color_dict["purple"], self.color_dict["pink"], self.color_dict["yellow"],
+                    self.color_dict["soft_red"], self.color_dict["blue"], self.color_dict["dark_green"]
                     ]
         random.shuffle(self.path_colors)
         rand = np.random.randint(3)
@@ -133,9 +138,18 @@ class SnakeGame():
 
             #now run the AI stuff
             self.path_plotter(path_list, finish_bool)
+            
+            frame = pygame.surfarray.array3d(self.dis)
+            self.gif.snap_maker(frame)
 
             if finish_bool:
                 self.game_close = True
+
+                i=0
+                while i<50:
+                    self.gif.snap_maker(frame)
+                    i+=1
+                self.gif.gif_maker()
                 break
 
             self.clock.tick(self.game_speed)
