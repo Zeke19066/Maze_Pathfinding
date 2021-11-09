@@ -7,7 +7,7 @@ import numpy as np
 class Capture():
     def __init__(self):
         print(os.getcwd())
-        self.parent_dir = r"Gif_Folder"
+        self.parent_dir = r"Demo"
         os.chdir(self.parent_dir)
         self.game_count = 0
         self.gif_stack = []
@@ -27,3 +27,12 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+"""
+#To generate frame in pygame:
+
+frame = pygame.surfarray.array3d(self.dis)
+self.gif.snap_maker(frame)
+
+"""

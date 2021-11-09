@@ -19,7 +19,6 @@ from collections import deque
 
 import Maze_AI
 import Maze_Generator
-import Gifmaker
 
 class SnakeGame():
     def __init__(self):
@@ -69,8 +68,6 @@ class SnakeGame():
             "light_gray": (200,200,200)
             }
         self.open_color = self.color_dict["light_gray"]
-
-        self.gif = Gifmaker.Capture()
 
     def score_generator(self, score):
         value = self.score_font.render("Your Score: " + str(score), True, self.color_dict["white"])
@@ -138,18 +135,8 @@ class SnakeGame():
 
             #now run the AI stuff
             self.path_plotter(path_list, finish_bool)
-            
-            frame = pygame.surfarray.array3d(self.dis)
-            self.gif.snap_maker(frame)
-
             if finish_bool:
                 self.game_close = True
-
-                i=0
-                while i<50:
-                    self.gif.snap_maker(frame)
-                    i+=1
-                self.gif.gif_maker()
                 break
 
             self.clock.tick(self.game_speed)
